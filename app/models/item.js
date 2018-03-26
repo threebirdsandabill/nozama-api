@@ -31,9 +31,9 @@ const itemSchema = new mongoose.Schema({
   }
 })
 
-itemSchema.virtual('length').get(function length () {
-  return this.text.length
-})
+// itemSchema.virtual('length').get(function length () {
+//   return this.text.length
+// })
 
 const Item = mongoose.model('Item', itemSchema)
 

@@ -25,5 +25,5 @@ module.exports = controller({
   index,
   show
 }, { before: [
-  { method: setModel(Item), only: ['index', 'show'] }
+  { method: setModel(Item), only: ['show'] }
 ] })
