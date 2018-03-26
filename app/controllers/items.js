@@ -23,9 +23,7 @@ const show = (req, res) => {
 
 module.exports = controller({
   index,
-  show,
+  show
 }, { before: [
-  { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Item), only: ['show'] }
+  { method: setModel(Item), only: ['index', 'show'] }
 ] })

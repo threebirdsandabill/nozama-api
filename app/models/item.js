@@ -17,7 +17,7 @@ const itemSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: tru
+    required: true
   }
 }, {
   timestamps: true,
