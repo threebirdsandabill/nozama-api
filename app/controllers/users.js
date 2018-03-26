@@ -28,6 +28,7 @@ const getToken = () =>
 
 const index = (req, res, next) => {
   User.find({})
+    .populate('items.itemId') // Not working but i dont think needed?
     .then(users => res.json({ users }))
     .catch(next)
 }
@@ -35,6 +36,30 @@ const index = (req, res, next) => {
 const show = (req, res, next) => {
   User.findById(req.params.id)
     .then(user => user ? res.json({ user }) : next())
+    .catch(next)
+}
+
+// How to use:: Send token and id of item to remove from cart. This will remove
+// that item from the cart
+const removeItemFromCart = (req, res, next) => {
+  delete req.body.user._owner
+  req.user.update(
+    {$pull: { cart: req.body.user.cart }}
+  )
+  .then(() => res.sendStatus(204))
+  .catch(next)
+}
+
+// how to use:: Send token and id of item to add to cart. It will append it
+// to exisiting items
+const update = (req, res, next) => {
+  console.log(req.body)
+  console.log(req.body.user.cart)
+  delete req.body.user._owner  // disallow owner reassignment.
+
+  req.user.update(
+    {$push: { cart: req.body.user.cart }})
+    .then(() => res.sendStatus(204))
     .catch(next)
 }
 
@@ -114,7 +139,9 @@ module.exports = controller({
   signup,
   signin,
   signout,
-  changepw
+  changepw,
+  update,
+  removeItemFromCart
 }, { before: [
-  { method: authenticate, except: ['signup', 'signin'] }
+  { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
 ] })
