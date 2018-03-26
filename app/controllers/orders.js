@@ -19,9 +19,14 @@ const index = (req, res, next) => {
 }
 
 const show = (req, res) => {
-  res.json({
-    order: req.order.toJSON({ virtuals: true, user: req.user })
-  })
+  console.log(req.params.id)
+  Order.findById(req.params.id)
+    .populate('items.itemId')
+    .then((order) => {
+      res.json({
+        order: order.toJSON({ virtuals: true, user: req.user })
+      })
+    })
 }
 
 const create = (req, res, next) => {
@@ -61,6 +66,6 @@ module.exports = controller({
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Order), only: ['show'] },
+  // { method: setModel(Order), only: ['show'] },
   { method: setModel(Order, { forUser: true }), only: ['update', 'destroy'] }
 ] })
