@@ -143,7 +143,7 @@ module.exports = controller({
   signin,
   signout,
   changepw,
-  update,
+  update
   // removeItemFromCart
 }, { before: [
   { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
