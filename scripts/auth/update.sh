@@ -13,6 +13,9 @@ curl "${API}${URL_PATH}/${ID}" \
       "cart": [{
           "itemId": "'"${ITEMID}"'",
           "quantity": "'"${QTY}"'"
+        }, {
+          "itemId": "'"${ITEMID2}"'",
+          "quantity": "'"${QTY}"'"
         }]
     }
   }'
