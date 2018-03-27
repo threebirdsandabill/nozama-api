@@ -56,7 +56,7 @@ const update = (req, res, next) => {
   console.log(req.body.user.cart)
   delete req.body.user._owner  // disallow owner reassignment.
 
-  req.user.update(req.body.user.cart)
+  req.user.update(req.body.user)
     .then(() => res.sendStatus(204))
     .catch(next)
 
@@ -146,5 +146,5 @@ module.exports = controller({
   update
   // removeItemFromCart
 }, { before: [
-  { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
+  // { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
 ] })
