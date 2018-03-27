@@ -41,26 +41,29 @@ const show = (req, res, next) => {
 
 // How to use:: Send token and id of item to remove from cart. This will remove
 // that item from the cart
-const removeItemFromCart = (req, res, next) => {
-  delete req.body.user._owner
-  req.user.update(
-    {$pull: { cart: req.body.user.cart }}
-  )
-  .then(() => res.sendStatus(204))
-  .catch(next)
-}
+// const removeItemFromCart = (req, res, next) => {
+//   console.log(req.body.user.cart[0].itemId)
+//   delete req.body.user._owner
+//   req.user.update(
+//     {$pull: { cart: { itemId: req.body.user.cart[0].itemId } }}
+//   )
+//   .then(() => res.sendStatus(204))
+//   .catch(next)
+// }
 
-// how to use:: Send token and id of item to add to cart. It will append it
-// to exisiting items
 const update = (req, res, next) => {
   console.log(req.body)
   console.log(req.body.user.cart)
   delete req.body.user._owner  // disallow owner reassignment.
 
-  req.user.update(
-    {$push: { cart: req.body.user.cart }})
+  req.user.update(req.body.user.cart)
     .then(() => res.sendStatus(204))
     .catch(next)
+
+  // req.user.update(
+  //   {$push: { cart: req.body.user.cart }})
+  //   .then(() => res.sendStatus(204))
+  //   .catch(next)
 }
 
 const makeErrorHandler = (res, next) =>
@@ -141,7 +144,7 @@ module.exports = controller({
   signout,
   changepw,
   update,
-  removeItemFromCart
+  // removeItemFromCart
 }, { before: [
   { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
 ] })

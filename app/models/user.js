@@ -11,10 +11,20 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   cart: [{
-    // type: String
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Item'
+    itemId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item'
+    },
+    quantity: {
+      type: Number,
+      required: true
+    }
   }],
+  // cart: [{
+  //   // type: String
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Item'
+  // }],
   token: {
     type: String,
     required: true
