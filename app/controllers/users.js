@@ -146,5 +146,5 @@ module.exports = controller({
   update
   // removeItemFromCart
 }, { before: [
-  // { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
+  { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
 ] })
