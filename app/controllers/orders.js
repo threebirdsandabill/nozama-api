@@ -34,11 +34,17 @@ const create = (req, res, next) => {
   const order = Object.assign(req.body.order, {
     _owner: req.user._id
   })
+  let createdOrder
   Order.create(order)
-    .then(order =>
+    .then((order) => {
+      createdOrder = order
+      req.user.cart = []
+      return req.user.save()
+    })
+    .then(() =>
       res.status(201)
         .json({
-          order: order.toJSON({ virtuals: true, user: req.user })
+          order: createdOrder.toJSON({ virtuals: true, user: req.user })
         }))
     .catch(next)
 }

@@ -54,12 +54,19 @@ const show = (req, res, next) => {
 
 const update = (req, res, next) => {
   console.log('look down from here')
-  console.log(req)
+  console.log('req.user', req.user)
+  console.log('req.user.cart', req.user.cart)
+  console.log('req.params', req.params)
+  console.log('req.body.user', req.body.user)
   // console.log(req.body.user)
   // console.log(req.body.user.cart)
   delete req.body.user._owner  // disallow owner reassignment.
 
   req.user.update(req.body.user)
+    .then((d) => {
+      console.log('data in update is', d)
+      return d
+    })
     .then(() => res.sendStatus(204))
     .catch(next)
 
