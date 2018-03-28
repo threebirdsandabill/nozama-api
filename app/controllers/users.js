@@ -53,23 +53,29 @@ const show = (req, res, next) => {
 // }
 
 const update = (req, res, next) => {
-  console.log('look down from here')
-  console.log('req.user', req.user)
-  console.log('req.user.cart', req.user.cart)
+  console.log('you should see this')
+  console.log('req.user log test', req.user)
+  console.log('req.user.cart = ', req.user.cart)
   console.log('req.params', req.params)
   console.log('req.body.user', req.body.user)
   // console.log(req.body.user)
   // console.log(req.body.user.cart)
   delete req.body.user._owner  // disallow owner reassignment.
 
-  req.user.update(req.body.user)
-    .then((d) => {
-      console.log('data in update is', d)
-      return d
-    })
+  if (req.body.user.cart === 'empty string') {
+    console.log('empty')
+    req.user.cart = []
+    return req.user.save()
+  } else {
+    console.log('not empty')
+    req.user.update(req.body.user)
+      .then((d) => {
+        console.log('data in update is', d)
+        return d
+      })
     .then(() => res.sendStatus(204))
     .catch(next)
-
+  }
   // req.user.update(
   //   {$push: { cart: req.body.user.cart }})
   //   .then(() => res.sendStatus(204))
