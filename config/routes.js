@@ -19,5 +19,6 @@ module.exports = require('lib/wiring/routes')
 .patch('/change-password/:id', 'users#changepw')
 // .patch('/deleteFromCart/:id', 'users#removeItemFromCart') // TODO
 .resources('users', { only: ['index', 'show', 'update'] })
+.resources('tokens', { only: ['create'] })
 
 // all routes created

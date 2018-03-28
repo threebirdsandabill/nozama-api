@@ -52,8 +52,10 @@ const show = (req, res, next) => {
 // }
 
 const update = (req, res, next) => {
-  console.log(req.body)
-  console.log(req.body.user.cart)
+  console.log('look down from here')
+  console.log(req)
+  // console.log(req.body.user)
+  // console.log(req.body.user.cart)
   delete req.body.user._owner  // disallow owner reassignment.
 
   req.user.update(req.body.user)

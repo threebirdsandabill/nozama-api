@@ -22,6 +22,10 @@ const orderSchema = new mongoose.Schema({
       required: true
     }
   }],
+  orderTotal: {
+    type: Number,
+    required: true
+  },
   _owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -38,13 +42,13 @@ const orderSchema = new mongoose.Schema({
     }
   }
 })
-orderSchema.virtual('totalCost').get(function () {
-  let total = 0
-  for (let i = 0; i > this.items.length; i++) {
-    total = (this.items[i].quantity * this.items[i].cost)
-  }
-  return total
-})
+// orderSchema.virtual('totalCost').get(function () {
+//   let total = 0
+//   for (let i = 0; i > this.items.length; i++) {
+//     total = (this.items[i].quantity * this.items[i].cost)
+//   }
+//   return total
+// })
 
 const Order = mongoose.model('Order', orderSchema)
 
