@@ -28,13 +28,14 @@ const getToken = () =>
 
 const index = (req, res, next) => {
   User.find({})
-    .populate('items.itemId') // Not working but i dont think needed?
+    .populate('cart.itemId') // Not working but i dont think needed?
     .then(users => res.json({ users }))
     .catch(next)
 }
 
 const show = (req, res, next) => {
   User.findById(req.params.id)
+  .populate('cart.itemId') // Not working but i dont think needed?
     .then(user => user ? res.json({ user }) : next())
     .catch(next)
 }
@@ -90,6 +91,7 @@ const signin = (req, res, next) => {
   const credentials = req.body.credentials
   const search = { email: credentials.email }
   User.findOne(search)
+    .populate('cart.itemId')
     .then(user =>
       user ? user.comparePassword(credentials.password)
             : Promise.reject(new HttpError(404)))
