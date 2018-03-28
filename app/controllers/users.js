@@ -28,14 +28,58 @@ const getToken = () =>
 
 const index = (req, res, next) => {
   User.find({})
+    .populate('cart.itemId') // Not working but i dont think needed?
     .then(users => res.json({ users }))
     .catch(next)
 }
 
 const show = (req, res, next) => {
   User.findById(req.params.id)
+  .populate('cart.itemId') // Not working but i dont think needed?
     .then(user => user ? res.json({ user }) : next())
     .catch(next)
+}
+
+// How to use:: Send token and id of item to remove from cart. This will remove
+// that item from the cart
+// const removeItemFromCart = (req, res, next) => {
+//   console.log(req.body.user.cart[0].itemId)
+//   delete req.body.user._owner
+//   req.user.update(
+//     {$pull: { cart: { itemId: req.body.user.cart[0].itemId } }}
+//   )
+//   .then(() => res.sendStatus(204))
+//   .catch(next)
+// }
+
+const update = (req, res, next) => {
+  console.log('you should see this')
+  console.log('req.user log test', req.user)
+  console.log('req.user.cart = ', req.user.cart)
+  console.log('req.params', req.params)
+  console.log('req.body.user', req.body.user)
+  // console.log(req.body.user)
+  // console.log(req.body.user.cart)
+  delete req.body.user._owner  // disallow owner reassignment.
+
+  if (req.body.user.cart === 'empty string') {
+    console.log('empty')
+    req.user.cart = []
+    return req.user.save()
+  } else {
+    console.log('not empty')
+    req.user.update(req.body.user)
+      .then((d) => {
+        console.log('data in update is', d)
+        return d
+      })
+    .then(() => res.sendStatus(204))
+    .catch(next)
+  }
+  // req.user.update(
+  //   {$push: { cart: req.body.user.cart }})
+  //   .then(() => res.sendStatus(204))
+  //   .catch(next)
 }
 
 const makeErrorHandler = (res, next) =>
@@ -62,6 +106,7 @@ const signin = (req, res, next) => {
   const credentials = req.body.credentials
   const search = { email: credentials.email }
   User.findOne(search)
+    .populate('cart.itemId')
     .then(user =>
       user ? user.comparePassword(credentials.password)
             : Promise.reject(new HttpError(404)))
@@ -114,7 +159,9 @@ module.exports = controller({
   signup,
   signin,
   signout,
-  changepw
+  changepw,
+  update
+  // removeItemFromCart
 }, { before: [
-  { method: authenticate, except: ['signup', 'signin'] }
+  { method: authenticate, except: ['signup', 'signin'] } // TODO uncomment this before commit
 ] })

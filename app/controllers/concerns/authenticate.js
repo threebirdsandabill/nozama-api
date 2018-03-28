@@ -16,6 +16,11 @@ const accessDenied = (res) => {
 }
 
 const authenticate = (req, res, next) => {
+  console.log('before authenticate req is in authenticate')
+  console.log('req.user', req.user)
+  // console.log('req.user.cart', req.user.cart)
+  console.log('req.params.id', req.params.id)
+  console.log('req.body.user', req.body.user)
   const tokenRegex = /^Token token=/
   const separatorRegex = /\s*(?::|;|\t+)\s*/
   const auth = req.headers.authorization
