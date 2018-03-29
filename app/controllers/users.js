@@ -65,7 +65,8 @@ const update = (req, res, next) => {
   if (req.body.user.cart === 'empty string') {
     console.log('empty')
     req.user.cart = []
-    return req.user.save()
+    req.user.save()
+    res.sendStatus(204)
   } else {
     console.log('not empty')
     req.user.update(req.body.user)
