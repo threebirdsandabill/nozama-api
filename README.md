@@ -26,7 +26,17 @@ Build an e-commerce website with a fully functioning back end to take customer o
 | DELETE | `/orders/:id`               | `orders#destroy`          |
 | POST   | `/tokens`                   | `tokens#create`           |
 
-# Technologies Used
+## Test Credit Card
+
+To checkout with a test credit card, user this:
+
+- email: anything@anything.com
+- number: 4242 4242 4242 4242
+- expiray: 12/20
+- cvv: 123
+- zip code: 02140
+
+## Technologies Used
 
 ## Back-End:
 - noSQL
