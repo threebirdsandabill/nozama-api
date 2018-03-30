@@ -1,12 +1,42 @@
 # NOZAMA
 - FRONT-END REPOSITORY: (https://github.com/threebirdsandabill/nozama)
 - BACKEND REPOSITORY:  (https://github.com/threebirdsandabill/nozama-api)
+- FRONT END CLIENT: (https://threebirdsandabill.github.io/nozama/)
+- BACKEND DEPLOYED: (https://nozama-api.herokuapp.com/)
 
 # Planned Objective
 
 Build an e-commerce website with a fully functioning back end to take customer orders, accept payment, and store order data.
 
-# Technologies Used
+## API End Points
+
+| Verb   | URI Pattern                 | Controller#Action         |
+|--------|-----------------------------|---------------------------|
+| POST   | `/sign-up`                  | `users#signup`            |
+| POST   | `/sign-in`                  | `users#signin`            |
+| DELETE | `/sign-out`                 | `users#signout`           |
+| PATCH  | `/change-password`          | `users#changepw`          |
+| GET    | `/items`                    | `items#index`             |
+| GET    | `/users`                    | `users#index`             |
+| GET    | `/users/:id`                | `users#show`              |
+| PATCH  | `/users/:id`                | `users#update`            |
+| GET    | `/orders`                   | `orders#index`            |
+| GET    | `/orders/:id`               | `orders#show`             |
+| POST   | `/orders`                   | `orders#create`           |
+| DELETE | `/orders/:id`               | `orders#destroy`          |
+| POST   | `/tokens`                   | `tokens#create`           |
+
+## Test Credit Card
+
+To checkout with a test credit card, user this:
+
+- email: anything@anything.com
+- number: 4242 4242 4242 4242
+- expiray: 12/20
+- cvv: 123
+- zip code: 02140
+
+## Technologies Used
 
 ## Back-End:
 - noSQL
